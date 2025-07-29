@@ -18,7 +18,7 @@ import pagefind from "astro-pagefind";
 
 // https://astro.build/config
 export default defineConfig({
-  site: YukinaConfig.site,
+  site: 'https://langxin11.github.io',
   integrations: [
     tailwind(),
     svelte(),
