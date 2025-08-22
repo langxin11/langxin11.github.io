@@ -29,7 +29,7 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 export default defineConfig({
 	site: "https://langxin11.github.io",
 
-	base: process.env.NODE_ENV === "production" ? "/langxin11.github.io/" : "/",
+	base: process.env.NODE_ENV === "production" ? "/" : "/",
 	trailingSlash: "always",
 	integrations: [
 		tailwind({
