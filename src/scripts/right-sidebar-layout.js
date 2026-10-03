@@ -14,8 +14,8 @@ function initPageLayout(pageType) {
 	if (defaultPostListLayout === "grid") {
 		hideRightSidebar();
 	} else {
-        showRightSidebar();
-    }
+		showRightSidebar();
+	}
 
 	// 监听布局切换事件
 	window.addEventListener("layoutChange", (event) => {
@@ -26,17 +26,17 @@ function initPageLayout(pageType) {
 			showRightSidebar();
 		}
 	});
-    
-    // 监听本地存储变化（用于跨标签页同步）
-    window.addEventListener('storage', (event) => {
-        if (event.key === 'postListLayout') {
-            if (event.newValue === 'grid') {
-                hideRightSidebar();
-            } else {
-                showRightSidebar();
-            }
-        }
-    });
+
+	// 监听本地存储变化（用于跨标签页同步）
+	window.addEventListener("storage", (event) => {
+		if (event.key === "postListLayout") {
+			if (event.newValue === "grid") {
+				hideRightSidebar();
+			} else {
+				showRightSidebar();
+			}
+		}
+	});
 
 	// 监听页面导航事件
 	document.addEventListener("astro:page-load", () => {
@@ -107,14 +107,15 @@ function showRightSidebar() {
 
 // 页面加载完成后初始化
 function initialize() {
-    const pageType = document.documentElement.getAttribute("data-page-type") || "projects";
-    initPageLayout(pageType);
+	const pageType =
+		document.documentElement.getAttribute("data-page-type") || "projects";
+	initPageLayout(pageType);
 }
 
 if (document.readyState === "loading") {
 	document.addEventListener("DOMContentLoaded", initialize);
 } else {
-    initialize();
+	initialize();
 }
 
 // 导出函数供其他脚本使用
@@ -127,10 +128,10 @@ if (typeof module !== "undefined" && module.exports) {
 }
 
 // 同时也挂载到 window 对象，以便在浏览器环境中直接调用
-if (typeof window !== 'undefined') {
-    window.rightSidebarLayout = {
-        initPageLayout,
-        hideRightSidebar,
-        showRightSidebar
-    };
+if (typeof window !== "undefined") {
+	window.rightSidebarLayout = {
+		initPageLayout,
+		hideRightSidebar,
+		showRightSidebar,
+	};
 }
