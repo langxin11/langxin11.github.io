@@ -1,0 +1,110 @@
+name: Publish Shirone notes
+
+on:
+  push:
+    branches: [main, codex/shirone-migration]
+  workflow_dispatch:
+    inputs:
+      content_ref:
+        description: Content commit or branch to publish
+        default: main
+        type: string
+  schedule:
+    - cron: '17 * * * *'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.compare.outputs.changed }}
+      content_sha: ${{ steps.resolve.outputs.content_sha }}
+    steps:
+      - name: Resolve exact content revision
+        id: resolve
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CONTENT_REF: ${{ inputs.content_ref || (github.ref == 'refs/heads/main' && 'main' || 'codex/shirone-migration') }}
+        run: |
+          set -euo pipefail
+          [[ "$CONTENT_REF" =~ ^[A-Za-z0-9._/-]+$ ]]
+          content_sha=$(gh api "repos/langxin11/Mizuki_Content_XDL/commits/$CONTENT_REF" --jq '.sha')
+          [[ "$content_sha" =~ ^[a-f0-9]{40}$ ]]
+          echo "content_sha=$content_sha" >> "$GITHUB_OUTPUT"
+      - name: Check last successful publication
+        id: compare
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CONTENT_SHA: ${{ steps.resolve.outputs.content_sha }}
+          SITE_SHA: ${{ github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          changed=true
+          if [[ "$EVENT_NAME" == schedule ]]; then
+            previous=$(gh api "repos/$REPOSITORY/actions/workflows/shirone-pages.yml/runs?status=success&per_page=1" --jq '.workflow_runs[0].id // empty')
+            if [[ -n "$previous" ]] && gh run download "$previous" -R "$REPOSITORY" -n deployment-info -D previous; then
+              if [[ "$(jq -r .content_sha previous/revision.json)" == "$CONTENT_SHA" ]] && [[ "$(jq -r .site_sha previous/revision.json)" == "$SITE_SHA" ]]; then changed=false; fi
+            fi
+          fi
+          mkdir -p deployment-info
+          jq -n --arg content "$CONTENT_SHA" --arg site "$SITE_SHA" '{content_sha:$content,site_sha:$site}' > deployment-info/revision.json
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deployment-info
+          path: deployment-info/revision.json
+          retention-days: 30
+
+  build:
+    needs: changes
+    if: needs.changes.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout content and personal site configuration
+        uses: actions/checkout@v7
+        with:
+          repository: langxin11/Mizuki_Content_XDL
+          ref: ${{ needs.changes.outputs.content_sha }}
+          path: content
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: content/site/package.json
+      - name: Install locked dependencies
+        working-directory: content/site
+        run: pnpm install --frozen-lockfile
+      - name: Check configuration
+        working-directory: content/site
+        run: pnpm check
+      - name: Build and verify published articles
+        working-directory: content/site
+        run: pnpm build
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: content/site/dist
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v5
+        id: deployment
