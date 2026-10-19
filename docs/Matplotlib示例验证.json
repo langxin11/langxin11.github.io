@@ -1,14 +1,14 @@
 {
-  "checked": "2026-10-04",
-  "system": "Windows",
-  "python": "3.13.9",
-  "matplotlib": "3.10.6",
-  "numpy": "2.3.5",
+  "checked": "2026-10-20",
+  "system": "Windows 11",
+  "python": "3.10.19",
+  "matplotlib": "3.10.8",
+  "numpy": "2.2.6",
   "font": "SimSun",
-  "png_dimensions": [
-    1800,
-    1200
-  ],
-  "pdf_bytes": 26180,
-  "scope": "Runs the article configuration and complete plot/export example; does not validate other systems."
+  "math_font": "STIX",
+  "single_column_png": [1084, 754],
+  "multi_panel_png": [1084, 994],
+  "baseline_png": [1800, 1200],
+  "baseline_pdf_bytes": 26180,
+  "scope": "Runs publication-grade rcParams configuration, single-column tracking with inset zoom, two-panel stacked subplots with \\mathrm{...} upright units, and baseline examples; verifies 300 DPI publication PNG generation and elimination of U+2212 glyph warning."
 }

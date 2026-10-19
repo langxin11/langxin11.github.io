@@ -6,7 +6,7 @@
   {"file":"posts/CMU_最优控制学习记录3.md","status":"部分验证","public":true,"scope":"Julia 1.10.10 验证 MPC 分块尺寸、初态残差及 Hessian；未执行完整 OSQP 和航天器实验。"},
   {"file":"posts/CMU_最优控制学习记录4 .md","status":"部分验证","public":true,"scope":"Julia 1.10.10 的简化线性测试检验 iLQR 递推与线搜索拒绝逻辑；原四旋翼和 DIRCOL 实验待复现。"},
   {"file":"posts/CMU_最优控制学习记录5.md","status":"待复现","public":true,"scope":"已核对四元数顺序与坐标系说明；原旋转积分实验未重新运行。"},
-  {"file":"posts/知乎迁入/matplotlib-chinese-mathtext/index.md","status":"已核查","public":false,"scope":"迁入示例已在 Matplotlib 3.10.6 生成 PNG/PDF；验证限于该环境，不保证所有系统都安装同一字体。"},
+  {"file":"posts/知乎迁入/matplotlib-chinese-mathtext/index.md","status":"已核查","public":true,"scope":"已扩展出版级科研绘图规范，在 Matplotlib 3.10.8 生成单栏局部放大与双子图堆叠 PNG/PDF，验证 Type 42 嵌入与负号消解；正式公开发布。"},
   {"file":"posts/知乎迁入/julia-vscode-intellisense/index.md","status":"部分验证","public":false,"scope":"已核对 Juliaup 命令及日志的适用条件；原 VS Code 扩展版本缺失，未复现完整故障。"},
   {"file":"posts/知乎迁入/ubuntu-wezterm/index.md","status":"待复现","public":false,"scope":"已核对官方安装文档及配置版本条件；Ubuntu 24.04 的实际安装和配置验证尚未完成。"},
   {"file":"posts/知乎迁入/onshape-mujoco-closed-loop/index.md","status":"部分验证","public":false,"scope":"真实仓库资产在 MuJoCo 3.10.0/3.4.0 通过 VFS 编译与固定基座空载检查；已记录闭环残差，原导出版本、CAD 再导出及接触实验未复现。"}
