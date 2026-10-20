@@ -13,7 +13,7 @@
 
 需要 Node.js 24 LTS 和 pnpm 12.6.0。首次在 `site/` 安装依赖，再运行 `pnpm dev`；Obsidian 保存 `posts/`、`spec/`、`images/` 后会同步到预览。`pnpm check` 检查配置，`pnpm build` 构建公开内容并检查旧链接、图片、公式和订阅地址。
 
-正式地址为 <https://langxin11.github.io/>。内容仓库推送后，发布仓库每小时检查一次更新；GitHub 排队可能延迟。需要立即发布时，在已提交且干净的 main 分支运行 `./scripts/Publish-Shirone.ps1`。构建或验收失败不会替换线上站点。
+正式地址为 <https://langxin11.github.io/>。推送 main 分支即可通过 GitHub Actions 自动构建并部署到 GitHub Pages。构建或验收失败不会替换线上站点。
 
 包含 4 篇草稿的旧预览仍可用 `./scripts/Start-ShironePreview.ps1`；生成产物有草稿提示，不能上传为正式网站。
 
