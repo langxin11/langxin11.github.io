@@ -1,6 +1,6 @@
 {
-  "buildCommand": "node scripts/build-vercel.mjs",
-  "outputDirectory": "site/dist",
+  "buildCommand": "node scripts/build-shirone.mjs",
+  "outputDirectory": "content/site/dist",
   "installCommand": "npm install --global pnpm@12.6.0",
   "framework": null,
   "headers": [
