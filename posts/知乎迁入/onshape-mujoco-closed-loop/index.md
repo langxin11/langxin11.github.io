@@ -165,7 +165,7 @@ closing_right_link_finger_pin
 
 核查环境为 Windows、Python 3.13.9、MuJoCo 3.10.0、NumPy 2.3.5。先编译三份真实 XML 和各自引用的 27 个 STL；四条 connect 的 site 名称均与本文示意一致，初始闭环距离约为 8.1×10⁻¹³ m。
 
-空载测试在内存中移除自由基座，把夹爪固定在世界；其余 MJCF 参数保持不变，包括回差、摩擦、碰撞和求解参数。用外部 PD 生成限幅力矩，目标角在 0～1.2 rad 内按 10 秒周期平滑变化，共运行 20 秒。测试参数与完整运行入口见[最小验证示例](https://github.com/langxin11/Mizuki_Content_XDL/tree/main/examples/gripper-verification)。
+空载测试在内存中移除自由基座，把夹爪固定在世界；其余 MJCF 参数保持不变，包括回差、摩擦、碰撞和求解参数。用外部 PD 生成限幅力矩，目标角在 0～1.2 rad 内按 10 秒周期平滑变化，共运行 20 秒。测试参数与完整运行入口见[最小验证示例](https://github.com/langxin11/langxin11.github.io/tree/main/examples/gripper-verification)。
 
 | 检查项目 | MuJoCo 3.10.0 的本次结果 |
 | --- | --- |
@@ -177,7 +177,7 @@ closing_right_link_finger_pin
 
 ![本次真实资产的固定基座空载开合与闭环误差](./empty-load-validation.png)
 
-MuJoCo 3.4.0 使用同一加载方式也通过了该空载检查，闭环最大距离约 0.00043 mm。完整环境、模型哈希与分模型结果见[验证报告](https://github.com/langxin11/Mizuki_Content_XDL/blob/main/docs/夹爪模型验证-3.10.json)。
+MuJoCo 3.4.0 使用同一加载方式也通过了该空载检查，闭环最大距离约 0.00043 mm。完整环境、模型哈希与分模型结果见[验证报告](https://github.com/langxin11/langxin11.github.io/blob/main/docs/夹爪模型验证-3.10.json)。
 
 **资源读取限制**：本机两个 MuJoCo 版本直接从磁盘加载时，均在中文名称 `part_1__配置.stl` 处报文件打开错误，文件实际存在。验证脚本通过内存资源和 ASCII 别名加载相同网格字节，并保留原 mesh 名称；这不是原始文件在所有环境都可直接加载的证明。
 
