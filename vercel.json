@@ -1,7 +1,7 @@
 {
   "buildCommand": "node scripts/build-shirone.mjs",
-  "outputDirectory": "content/site/dist",
-  "installCommand": "npm install --global pnpm@12.6.0",
+  "outputDirectory": "site/dist",
+  "installCommand": "corepack enable pnpm && cd site && pnpm install --frozen-lockfile",
   "framework": null,
   "headers": [
     {

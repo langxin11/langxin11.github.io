@@ -16,21 +16,17 @@ function run(command, args, cwd = site) {
   }
 }
 
-console.log('Installing locked dependencies in site/...');
-run('pnpm', ['install', '--frozen-lockfile']);
-
 console.log('Checking configuration...');
 run('pnpm', ['check']);
 
 console.log('Building and verifying site...');
 run('pnpm', ['build']);
 
-// Populate legacy output directory (content/site/dist) if Vercel dashboard overrides output path
+// Support legacy output directory (content/site/dist) if Vercel dashboard overrides output path
 try {
   const legacyDist = path.join(root, 'content', 'site', 'dist');
   mkdirSync(legacyDist, { recursive: true });
   cpSync(path.join(site, 'dist'), legacyDist, { recursive: true });
-  console.log('Synced build output to content/site/dist');
 } catch (e) {
   console.warn('Could not sync to legacy output directory:', e);
 }
